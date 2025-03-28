@@ -4,6 +4,7 @@ struct CircleImage: View {
     let image: Image
     var body: some View {
         image
+            .resizable()
             .frame(width: 200, height: 200)
             .clipShape(Circle())
             .overlay {
