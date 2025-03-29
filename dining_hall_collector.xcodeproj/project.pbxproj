@@ -24,6 +24,17 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		C997B6D12D98569D00B2E476 /* Lauder.gpx */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = Lauder.gpx; sourceTree = "<group>"; };
+		C997B6D22D98569D00B2E476 /* Hill.gpx */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = Hill.gpx; sourceTree = "<group>"; };
+		C997B6D32D98569D00B2E476 /* Accenture.gpx */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = Accenture.gpx; sourceTree = "<group>"; };
+		C997B6D42D98569D00B2E476 /* Quaker Kitchen.gpx */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = "Quaker Kitchen.gpx"; sourceTree = "<group>"; };
+		C997B6D52D98569D00B2E476 /* KCEH.gpx */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = KCEH.gpx; sourceTree = "<group>"; };
+		C997B6D62D98569D00B2E476 /* 1920 Commons.gpx */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = "1920 Commons.gpx"; sourceTree = "<group>"; };
+		C997B6D72D98569D00B2E476 /* Houston.gpx */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = Houston.gpx; sourceTree = "<group>"; };
+		C997B6D82D98569D00B2E476 /* Joes.gpx */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = Joes.gpx; sourceTree = "<group>"; };
+		C997B6D92D98569D00B2E476 /* Falk.gpx */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = Falk.gpx; sourceTree = "<group>"; };
+		C997B6DA2D98569D00B2E476 /* McClelland.gpx */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = McClelland.gpx; sourceTree = "<group>"; };
+		C997B6DB2D98569D00B2E476 /* Pret.gpx */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = Pret.gpx; sourceTree = "<group>"; };
 		CB2071092D94CC6C0007322C /* dining_hall_collector.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = dining_hall_collector.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		CB2071192D94CC6D0007322C /* dining_hall_collectorTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = dining_hall_collectorTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		CB2071232D94CC6D0007322C /* dining_hall_collectorUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = dining_hall_collectorUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -75,6 +86,17 @@
 		CB2071002D94CC6C0007322C = {
 			isa = PBXGroup;
 			children = (
+				C997B6D62D98569D00B2E476 /* 1920 Commons.gpx */,
+				C997B6D32D98569D00B2E476 /* Accenture.gpx */,
+				C997B6D92D98569D00B2E476 /* Falk.gpx */,
+				C997B6D22D98569D00B2E476 /* Hill.gpx */,
+				C997B6D72D98569D00B2E476 /* Houston.gpx */,
+				C997B6D82D98569D00B2E476 /* Joes.gpx */,
+				C997B6D52D98569D00B2E476 /* KCEH.gpx */,
+				C997B6D12D98569D00B2E476 /* Lauder.gpx */,
+				C997B6DA2D98569D00B2E476 /* McClelland.gpx */,
+				C997B6DB2D98569D00B2E476 /* Pret.gpx */,
+				C997B6D42D98569D00B2E476 /* Quaker Kitchen.gpx */,
 				CB20710B2D94CC6C0007322C /* dining_hall_collector */,
 				CB20711C2D94CC6D0007322C /* dining_hall_collectorTests */,
 				CB2071262D94CC6D0007322C /* dining_hall_collectorUITests */,

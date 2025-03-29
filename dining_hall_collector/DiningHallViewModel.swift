@@ -18,7 +18,7 @@ import SwiftUI
         Location(name: "Lauder Dining", description: "Modern dining facility with international cuisine.", image: Image("lauder"), coords: .lauder),
         Location(name: "Mcclelland Sushi Spot", description: "Specializing in fresh sushi and Asian cuisine.", image: Image("mcclelland"), coords: .mcclelland),
         Location(name: "Pret A Manger", description: "Quick and fresh grab-and-go options.", image: Image("pret"), coords: .pret),
-        Location(name: "Quaker Kitchen", description: "Healthy and sustainable dining choices.", image: Image("quaker"), coords: .quaker, isFound: true)
+        Location(name: "Quaker Kitchen", description: "Healthy and sustainable dining choices.", image: Image("quaker"), coords: .quaker)
     ]
     
     var collectedHalls: Set<String> = []
