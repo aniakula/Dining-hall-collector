@@ -1,10 +1,19 @@
 import SwiftUI
 
+enum AlertType: Identifiable {
+    case alreadyCollected
+    case collected
+    var id: Int {
+        hashValue
+    }
+}
+
 struct DiningHallView: View {
     @StateObject var viewModel: DiningHallViewModel
     @Environment(\.dismiss) private var dismiss
     @StateObject private var motionManager = MotionManager()
     let location: Location
+    @State private var alertType: AlertType? = nil
     
     var body: some View {
         ZStack {
@@ -63,15 +72,39 @@ struct DiningHallView: View {
         }
         .navigationBarHidden(true)
         .onAppear {
-            if !viewModel.isCollected(location) {
+            if viewModel.isCollected(location) {
+                alertType = .alreadyCollected
+            } else {
                 motionManager.onShakeDetected = {
                     viewModel.collect(location)
+                    alertType = .collected
                 }
                 motionManager.startUpdates()
             }
         }
         .onDisappear {
             motionManager.stopUpdates()
+        }
+        // Display an alert based on the alertType.
+        .alert(item: $alertType) { type in
+            switch type {
+            case .alreadyCollected:
+                return Alert(
+                    title: Text("Dining Hall Collected"),
+                    message: Text("This dining hall has already been collected."),
+                    dismissButton: .default(Text("OK"), action: {
+                        dismiss()
+                    })
+                )
+            case .collected:
+                return Alert(
+                    title: Text("Dining Hall Collected"),
+                    message: Text("You have successfully collected this dining hall!"),
+                    dismissButton: .default(Text("OK"), action: {
+                        dismiss()  //return home.
+                    })
+                )
+            }
         }
     }
 }
