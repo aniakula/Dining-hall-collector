@@ -1,8 +1,9 @@
 import SwiftUI
 
 struct DiningHallView: View {
-    @Bindable var viewModel: NavViewModel
+    @StateObject var viewModel: DiningHallViewModel
     @Environment(\.dismiss) private var dismiss
+    @StateObject private var motionManager = MotionManager()
     let location: Location
     
     var body: some View {
@@ -61,9 +62,18 @@ struct DiningHallView: View {
             }
         }
         .navigationBarHidden(true)
+        .onAppear {
+            if !viewModel.isCollected(location) {
+                motionManager.onShakeDetected = {
+                    viewModel.collect(location)
+                }
+                motionManager.startUpdates()
+            }
+        }
+        .onDisappear {
+            motionManager.stopUpdates()
+        }
     }
 }
 
-#Preview {
-    DiningHallView(viewModel: NavViewModel(), location: Location(name: "1920 Commons", description: "A popular dining hall in the heart of campus.", image: Image("commons"), coords: .commons))
-}
+#Preview { DiningHallView(viewModel: DiningHallViewModel(), location: Location(name: "1920 Commons", description: "A popular dining hall in the heart of campus.", image: Image("commons"), coords: .commons)) }

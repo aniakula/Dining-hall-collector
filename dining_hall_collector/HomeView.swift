@@ -1,11 +1,10 @@
 import SwiftUI
 
 struct HomeView: View {
-    @State var viewModel = NavViewModel()
+    @StateObject var viewModel = DiningHallViewModel()
     @State private var showInstructions = false
-
     var body: some View {
-        NavigationStack() {
+        NavigationStack {
             ZStack {
                 LinearGradient(
                     gradient: Gradient(colors: [Color.blue.opacity(0.7), Color.purple.opacity(0.5)]),
@@ -13,7 +12,7 @@ struct HomeView: View {
                     endPoint: .bottom
                 )
                 .ignoresSafeArea()
-                
+
                 VStack(spacing: 20) {
                     VStack {
                         Image("pennIcon")
@@ -26,7 +25,7 @@ struct HomeView: View {
                                     .frame(width: 120, height: 120)
                             )
                             .shadow(radius: 10)
-                        
+
                         Text("Campus Dining Halls")
                             .font(.title)
                             .fontWeight(.bold)
@@ -35,11 +34,14 @@ struct HomeView: View {
                             .shadow(radius: 2)
                     }
                     .padding(.bottom, 10)
-                    
+
                     // Dining Halls List
                     List {
-                        ForEach(viewModel.getLocations().indices, id: \.self) { index in
-                            if let location = viewModel.getLocation(at: index) {
+                        Section(
+                            header: Text("Collected")
+                            .foregroundColor(.white)
+                            .fontWeight(.bold)) {
+                                ForEach(viewModel.locations.filter { $0.isFound }, id: \.name) { location in
                                 NavigationLink(destination: DiningHallView(viewModel: viewModel, location: location)) {
                                     HStack {
                                         location.image
@@ -47,7 +49,7 @@ struct HomeView: View {
                                             .scaledToFit()
                                             .frame(width: 50, height: 50)
                                             .cornerRadius(10)
-                                        
+
                                         VStack(alignment: .leading) {
                                             Text(location.name)
                                                 .font(.headline)
@@ -61,6 +63,34 @@ struct HomeView: View {
                                 }
                                 .listRowBackground(Color.white.opacity(0.2))
                             }
+                        }
+                        
+                        Section(
+                            header: Text("Not Collected")
+                            .foregroundColor(.white)
+                            .fontWeight(.bold)) {
+                                ForEach(viewModel.locations.filter { !$0.isFound }, id: \.name) { location in
+                                    NavigationLink(destination: DiningHallView(viewModel: viewModel, location: location)) {
+                                        HStack {
+                                            location.image
+                                                .resizable()
+                                                .scaledToFit()
+                                                .frame(width: 50, height: 50)
+                                                .cornerRadius(10)
+
+                                            VStack(alignment: .leading) {
+                                                Text(location.name)
+                                                    .font(.headline)
+                                                    .foregroundColor(.white)
+                                                Text("Tap to explore")
+                                                    .font(.caption)
+                                                    .foregroundColor(.white.opacity(0.7))
+                                            }
+                                        }
+                                        .padding(.vertical, 8)
+                                    }
+                                    .listRowBackground(Color.white.opacity(0.2))
+                                }
                         }
                     }
                     .scrollContentBackground(.hidden)
