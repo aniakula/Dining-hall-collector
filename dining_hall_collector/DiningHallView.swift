@@ -1,8 +1,11 @@
 import SwiftUI
+import CoreLocation
+import CoreMotion
 
 enum AlertType: Identifiable {
     case alreadyCollected
     case collected
+    case locationError
     var id: Int {
         hashValue
     }
@@ -12,6 +15,7 @@ struct DiningHallView: View {
     @StateObject var viewModel: DiningHallViewModel
     @Environment(\.dismiss) private var dismiss
     @StateObject private var motionManager = MotionManager()
+    @StateObject private var userLocationManager = UserLocationManager()
     let location: Location
     @State private var alertType: AlertType? = nil
     
@@ -73,40 +77,53 @@ struct DiningHallView: View {
         .navigationBarHidden(true)
         .onAppear {
             if viewModel.isCollected(location) {
-                alertType = .alreadyCollected
-            } else {
-                motionManager.onShakeDetected = {
-                    viewModel.collect(location)
-                    alertType = .collected
-                }
-                motionManager.startUpdates()
+               alertType = .alreadyCollected
             }
         }
-        .onDisappear {
-            motionManager.stopUpdates()
-        }
-        // Display an alert based on the alertType.
-        .alert(item: $alertType) { type in
-            switch type {
-            case .alreadyCollected:
-                return Alert(
-                    title: Text("Dining Hall Collected"),
-                    message: Text("This dining hall has already been collected."),
-                    dismissButton: .default(Text("OK"), action: {
-                        dismiss()
-                    })
-                )
-            case .collected:
-                return Alert(
-                    title: Text("Dining Hall Collected"),
-                    message: Text("You have successfully collected this dining hall!"),
-                    dismissButton: .default(Text("OK"), action: {
-                        dismiss()  //return home.
-                    })
-                )
-            }
-        }
-    }
-}
+        .onChange(of: userLocationManager.lastLocation) {
+            guard let newLocation = userLocationManager.lastLocation else { return }
+            let hallLocation = CLLocation(latitude: location.coords.latitude, longitude: location.coords.longitude)
+            let distance = newLocation.distance(from: hallLocation)
+           
+           if distance <= 50 {
+               if !viewModel.isCollected(location) {
+                   motionManager.onShakeDetected = {
+                       viewModel.collect(location)
+                       alertType = .collected
+                   }
+                   motionManager.startUpdates()
+               }
+           } else {
+               alertType = .locationError
+               motionManager.stopUpdates()
+           }
+       }
+       .onDisappear {
+           motionManager.stopUpdates()
+       }
+       .alert(item: $alertType) { type in
+           switch type {
+           case .alreadyCollected:
+               return Alert(
+                   title: Text("Dining Hall Collected"),
+                   message: Text("This dining hall has already been collected."),
+                   dismissButton: .default(Text("OK"), action: { dismiss() })
+               )
+           case .collected:
+               return Alert(
+                   title: Text("Dining Hall Collected"),
+                   message: Text("You have successfully collected this dining hall!"),
+                   dismissButton: .default(Text("OK"), action: { dismiss() })
+               )
+           case .locationError:
+               return Alert(
+                   title: Text("Location Error"),
+                   message: Text("You are not within 50 meters of this dining hall. Please move closer to collect it."),
+                   dismissButton: .default(Text("OK"), action: { dismiss() })
+               )
+           }
+       }
+   }
+   }
 
 #Preview { DiningHallView(viewModel: DiningHallViewModel(), location: Location(name: "1920 Commons", description: "A popular dining hall in the heart of campus.", image: Image("commons"), coords: .commons)) }
